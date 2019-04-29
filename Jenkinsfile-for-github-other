@@ -1,0 +1,37 @@
+pipeline {
+  agent any
+  stages {
+  stage ('Build Process') {
+        
+        steps {
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'cc01ce95-1cf1-4836-ab6b-395a6f093b25', url: 'https://github.com/subbu0683/Spring4Hiberante4Integration.git']]])
+            sh label: '', script: 'mvn clean compile'
+            }
+    }
+     stage ('Test Process') {
+      steps {
+        sh label: '', script: 'mvn test'
+        junit 'target/surefire-reports/**/*.xml'
+        echo 'JUnit Test cases are executed successfully.'
+      }
+    }
+    
+    stage ('SonarQube Code Analasys Process') {
+      steps {
+        sh label: '', script: 'mvn install sonar:sonar'
+        echo 'SonarQube code Analysys has been checked.'
+      }
+    }
+    stage ('Release Process') {
+      steps {
+        echo 'Released 1.0 Version.'
+      }
+    }
+    stage ('Deploy / Delivery Porces') {
+      steps {
+        build 'Spring4Hiberante4Deployment'
+        echo 'Application has been Deployed'
+      }
+    }
+  }
+}
