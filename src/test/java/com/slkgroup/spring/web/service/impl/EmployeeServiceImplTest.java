@@ -25,6 +25,7 @@ import com.slkgroup.spring.web.service.EmployeeService;
 @ContextConfiguration({ "classpath:/mvc-dispatcher-servlet.xml" })
 @PropertySource({ "classpath:/application.properties" })
 public class EmployeeServiceImplTest {
+
 	@Autowired
 	private EmployeeService employeeService;
 
@@ -91,4 +92,5 @@ public class EmployeeServiceImplTest {
 		}
 
 	}
+
 }

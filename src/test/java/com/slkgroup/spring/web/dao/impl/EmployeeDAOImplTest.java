@@ -1,8 +1,6 @@
 package com.slkgroup.spring.web.dao.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import com.slkgroup.spring.web.dao.EmployeeDAO;
 import com.slkgroup.spring.web.entity.Employee;
 
@@ -100,4 +97,5 @@ public class EmployeeDAOImplTest {
 		}
 
 	}
+
 }

@@ -9,8 +9,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.slkgroup.spring.web.controller.EmployeeController;
 import com.slkgroup.spring.web.entity.Employee;
 import com.slkgroup.spring.web.service.EmployeeService;
 
@@ -34,7 +32,6 @@ public class EmployeeControllerTest {
 
 	@Before
 	public void setupBeforEachTest() {
-		employee.setId(11);
 		employee.setName("Smith");
 		employee.setAge(30);
 		employee.setSalary(12000);
@@ -68,23 +65,18 @@ public class EmployeeControllerTest {
 	@Test
 	public void testDeleteEmployee() {
 		employeeService.createEmployee(employee);
-		// employeeService.deleteEmployee(employee.getId());
 		ModelAndView mav = controller.deleteEmployee(employee.getId());
 		Assert.assertEquals("redirect:getAllEmployees", mav.getViewName());
 	}
 
 	@Test
 	public void testGetAllEmployees() {
-		// employeeService.createEmployee(employee);
-		// employeeService.deleteEmployee(employee.getId());
 		ModelAndView mav = controller.getAllEmployees();
 		Assert.assertEquals("employeeList", mav.getViewName());
 	}
 
 	@Test
 	public void testSearchEmployee() {
-		// employeeService.createEmployee(employee);
-		// employeeService.deleteEmployee(employee.getId());
 		ModelAndView mav = controller.searchEmployee(employee.getName());
 		Assert.assertEquals("employeeList", mav.getViewName());
 	}
