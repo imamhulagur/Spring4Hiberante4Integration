@@ -21,7 +21,6 @@ import com.slkgroup.spring.web.entity.Employee;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:/mvc-dispatcher-servlet.xml" })
-@PropertySource({ "classpath:/application.properties" })
 public class EmployeeDAOImplTest {
 
 	@Autowired

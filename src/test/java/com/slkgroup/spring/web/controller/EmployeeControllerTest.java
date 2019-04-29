@@ -19,7 +19,6 @@ import com.slkgroup.spring.web.service.EmployeeService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:/mvc-dispatcher-servlet.xml" })
-@PropertySource({ "classpath:/application.properties" })
 public class EmployeeControllerTest {
 
 	@Autowired

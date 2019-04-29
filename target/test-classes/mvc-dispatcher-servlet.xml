@@ -25,7 +25,7 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<!-- DataSource In memory h2 database -->
+	<!-- Added By Razi Ahmad & Sasmita Moharana DataSource In memory h2 database -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
               destroy-method="close">
               <property name="driverClass" value="org.h2.Driver" />
