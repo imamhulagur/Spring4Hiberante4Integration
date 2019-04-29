@@ -20,7 +20,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "Employees")
+@Table(name = "Employee")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = -7988799579036225137L;
