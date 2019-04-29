@@ -1,4 +1,4 @@
-package com.spring.mvc.util;
+package com.slkgroup.spring.web.util;
 
 import java.io.Serializable;
 import java.util.List;

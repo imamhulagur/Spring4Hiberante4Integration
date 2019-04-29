@@ -1,11 +1,11 @@
 /**
  * 
  */
-package com.spring.mvc.dao.impl;
+package com.slkgroup.spring.web.dao.impl;
 
-import com.spring.mvc.dao.EmployeeDAO;
-import com.spring.mvc.entity.Employee;
-import com.spring.mvc.util.HibernateUtil;
+import com.slkgroup.spring.web.dao.EmployeeDAO;
+import com.slkgroup.spring.web.entity.Employee;
+import com.slkgroup.spring.web.util.HibernateUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

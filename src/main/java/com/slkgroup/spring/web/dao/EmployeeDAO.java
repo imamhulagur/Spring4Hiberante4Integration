@@ -1,11 +1,11 @@
 /**
  * 
  */
-package com.spring.mvc.dao;
+package com.slkgroup.spring.web.dao;
 
 import java.util.List;
 
-import com.spring.mvc.entity.Employee;
+import com.slkgroup.spring.web.entity.Employee;
 
 /**
  * @author Balasubramanyam B

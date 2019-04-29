@@ -1,6 +1,6 @@
-package com.spring.mvc.controller;
-import com.spring.mvc.entity.Employee;
-import com.spring.mvc.service.EmployeeService;
+package com.slkgroup.spring.web.controller;
+import com.slkgroup.spring.web.entity.Employee;
+import com.slkgroup.spring.web.service.EmployeeService;
 
 import org.jboss.logging.Logger;
 import org.springframework.stereotype.Controller;

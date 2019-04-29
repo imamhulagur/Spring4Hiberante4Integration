@@ -1,7 +1,7 @@
-package com.spring.mvc.service.impl;
-import com.spring.mvc.dao.EmployeeDAO;
-import com.spring.mvc.entity.Employee;
-import com.spring.mvc.service.EmployeeService;
+package com.slkgroup.spring.webs.ervice.impl;
+import com.slkgroup.spring.web.dao.EmployeeDAO;
+import com.slkgroup.spring.web.entity.Employee;
+import com.slkgroup.spring.web.service.EmployeeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

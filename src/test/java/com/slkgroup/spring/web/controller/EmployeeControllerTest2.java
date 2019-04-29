@@ -1,4 +1,4 @@
-package com.spring.mvc.controller;
+package com.slkgroup.spring.web.controller;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,7 @@ import org.junit.Test;
  * @author Balasubramanyam B
  * @version 1.0
  */
-public class EmployeeControllerTest {
+public class EmployeeControllerTest2 {
 	@Test
 	public void test1() {
 		assertEquals(12, 12);
