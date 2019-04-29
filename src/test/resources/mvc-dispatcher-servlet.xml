@@ -25,19 +25,19 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<!-- DataSource -->
+	<!-- DataSource In memory h2 database -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close">
-		<property name="driverClass" value="${database.driverClass}" />
-		<property name="jdbcUrl" value="${database.url}" />
-		<property name="user" value="${database.username}" />
-		<property name="password" value="${database.password}" />
+              destroy-method="close">
+              <property name="driverClass" value="org.h2.Driver" />
+              <property name="jdbcUrl" value="jdbc:h2:mem:testdb" />
+              <property name="user" value="sa" />
+              <property name="password" value="" />
 
-		<property name="acquireIncrement" value="${connection.acquireIncrement}" />
-		<property name="minPoolSize" value="${connection.minPoolSize}" />
-		<property name="maxPoolSize" value="${connection.maxPoolSize}" />
-		<property name="maxIdleTime" value="${connection.maxIdleTime}" />
-	</bean>
+              <property name="acquireIncrement" value="${connection.acquireIncrement}" />
+              <property name="minPoolSize" value="${connection.minPoolSize}" />
+              <property name="maxPoolSize" value="${connection.maxPoolSize}" />
+              <property name="maxIdleTime" value="${connection.maxIdleTime}" />
+       </bean>
 
 	<!-- Hibernate SessionFactory -->
 	<bean id="sessionFactory"

@@ -13,7 +13,6 @@
 		<spring.version>4.1.5.RELEASE</spring.version>
 		<hibernate.version>4.3.8.Final</hibernate.version>
 		<mysql.version>5.1.10</mysql.version>
-		<mockito.version>1.10.19</mockito.version>
 		<junit-version>4.11</junit-version>
 		<servlet-api-version>3.1.0</servlet-api-version>
 		<jsp-version>2.1</jsp-version>
@@ -83,10 +82,6 @@
 			<version>${mysql.version}</version>
 		</dependency>
 
-		<!-- Servlet and JSP -->
-		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>servlet-api</artifactId> 
-			<version>${servlet-api-version}</version> </dependency> -->
-		<!-- http://myjourneyonjava.blogspot.com/2015/09/spring-4-mvc-hibernate-4-mysql-5-maven.html -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -123,12 +118,14 @@
 			<version>3.2</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>${mockito.version}</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+         <dependency>
+             <groupId>com.h2database</groupId>
+              <artifactId>h2</artifactId>
+              <version>1.4.199</version>
+              <scope>test</scope>
+        </dependency>
+		
 
 	</dependencies>
 
