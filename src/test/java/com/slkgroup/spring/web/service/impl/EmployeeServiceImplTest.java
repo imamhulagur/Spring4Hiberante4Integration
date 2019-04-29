@@ -29,7 +29,7 @@ public class EmployeeServiceImplTest {
 	@Autowired
 	private EmployeeService employeeService;
 
-	Employee employee = new Employee();
+	Employee employee = null;
 
 	@Test
 	public void testingSeriveObject() {
@@ -38,6 +38,7 @@ public class EmployeeServiceImplTest {
 
 	@Before
 	public void setUpBeforeEachTest() {
+		employee = new Employee();
 		employee.setName("Smith");
 		employee.setAge(33);
 		employee.setSalary(12000);

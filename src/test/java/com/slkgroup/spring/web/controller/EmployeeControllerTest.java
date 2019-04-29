@@ -23,15 +23,16 @@ import com.slkgroup.spring.web.service.EmployeeService;
 public class EmployeeControllerTest {
 
 	@Autowired
-	EmployeeController controller;
+	private EmployeeController controller;
 
 	@Autowired
-	EmployeeService employeeService;
+	private EmployeeService employeeService;
 
-	Employee employee = new Employee();
+	Employee employee = null;
 
 	@Before
 	public void setupBeforEachTest() {
+		employee = new Employee();
 		employee.setName("Smith");
 		employee.setAge(30);
 		employee.setSalary(12000);

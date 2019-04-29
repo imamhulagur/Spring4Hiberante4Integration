@@ -27,7 +27,7 @@ public class EmployeeDAOImplTest {
 	@Autowired
 	private EmployeeDAO employeeDAO;
 
-	Employee employee = new Employee();
+	Employee employee = null;
 
 	@Test
 	public void testingDAOObject() {
@@ -36,6 +36,7 @@ public class EmployeeDAOImplTest {
 
 	@Before
 	public void setUpBeforeEachTest() {
+		employee = new Employee();
 		employee.setName("Smith");
 		employee.setAge(33);
 		employee.setSalary(12000);
