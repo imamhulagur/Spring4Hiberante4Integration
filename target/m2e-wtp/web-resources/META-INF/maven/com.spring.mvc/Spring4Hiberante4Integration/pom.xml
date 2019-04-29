@@ -116,6 +116,7 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
+		<!-- Added By Kamal Kumar Tripathi -->
 		<dependency>
 			<groupId>org.sonarsource.scanner.maven</groupId>
 			<artifactId>sonar-maven-plugin</artifactId>
@@ -147,6 +148,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.18.1</version>
 			</plugin> -->
+			<!-- Added By Kamal Kumar Tripathi -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
@@ -155,7 +157,8 @@
 					</includes>
 				</configuration>
 			</plugin>
-
+		
+			<!-- Added By Kamal Kumar Tripathi -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -177,7 +180,8 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	
+	<!-- Added By Kamal Kumar Tripathi -->
 	<profiles>
 		<profile>
 			<id>sonar</id>

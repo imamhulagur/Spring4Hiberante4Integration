@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 import java.io.Serializable;
 /**
- * @author Balasubramanyam B
+ * @author Imamsab Hulagur & Pawanchandra R Dhawaskar
  * @version 1.0
  * 
  */

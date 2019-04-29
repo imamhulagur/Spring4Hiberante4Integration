@@ -3,23 +3,25 @@
  */
 package com.slkgroup.spring.web.dao.impl;
 
-import com.slkgroup.spring.web.dao.EmployeeDAO;
-import com.slkgroup.spring.web.entity.Employee;
-import com.slkgroup.spring.web.util.HibernateUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.slkgroup.spring.web.dao.EmployeeDAO;
+import com.slkgroup.spring.web.entity.Employee;
+import com.slkgroup.spring.web.util.HibernateUtil;
+
 /**
- * @author Balasubramanyam B
+ * @author Razi Ahmad & Sasmita Moharana
  * @version 1.0
  */
 
 @Repository
+@Transactional
 public class EmployeeDAOImpl implements EmployeeDAO {
     
 	public EmployeeDAOImpl() {

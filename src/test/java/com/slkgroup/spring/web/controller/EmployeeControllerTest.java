@@ -15,7 +15,7 @@ import com.slkgroup.spring.web.entity.Employee;
 import com.slkgroup.spring.web.service.EmployeeService;
 
 /**
- * @author Razi 
+ * @author Razi Ahmad & Sasmita Moharana
  * @version 1.0
  */
 

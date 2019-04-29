@@ -3,6 +3,8 @@ package com.slkgroup.spring.web.service.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +17,7 @@ import com.slkgroup.spring.web.entity.Employee;
 import com.slkgroup.spring.web.service.EmployeeService;
 
 /**
- * @author Razi
+ * @author Razi Ahmad & Sasmita Moharana
  * @version 1.0
  */
 
@@ -23,7 +25,6 @@ import com.slkgroup.spring.web.service.EmployeeService;
 @ContextConfiguration({ "classpath:/mvc-dispatcher-servlet.xml" })
 @PropertySource({ "classpath:/application.properties" })
 public class EmployeeServiceImplTest {
-
 	@Autowired
 	private EmployeeService employeeService;
 
@@ -36,31 +37,28 @@ public class EmployeeServiceImplTest {
 
 	@Before
 	public void setUpBeforeEachTest() {
-
-		employee.setId(11);
 		employee.setName("Smith");
-		employee.setAge(30);
+		employee.setAge(33);
 		employee.setSalary(12000);
+		employeeService.createEmployee(employee);
 	}
 
 	@Test
 	public void testCreateEmployee() {
-		employeeService.createEmployee(employee);
-		assertEquals("Smith", employee.getName());
+		Employee found = employeeService.getEmployee(employee.getId());
+		assertEquals("Smith", found.getName());
 	}
 
 	@Test
 	public void testUpdateEmployee() {
-		employeeService.createEmployee(employee);
 		employee.setName("baby");
 		employeeService.updateEmployee(employee);
-		assertEquals("baby", employee.getName());
+		Employee found = employeeService.getEmployee(employee.getId());
+		assertEquals("baby", found.getName());
 	}
 
 	@Test
 	public void testDeleteEmployee() {
-
-		employeeService.createEmployee(employee);
 		int size = employeeService.getAllEmployees().size();
 		employeeService.deleteEmployee(employee.getId());
 		assertTrue(size > employeeService.getAllEmployees().size());
@@ -68,23 +66,29 @@ public class EmployeeServiceImplTest {
 
 	@Test
 	public void testGetEmployee() {
-		employeeService.createEmployee(employee);
-		employeeService.getEmployee(employee.getId());
-		assertEquals("Smith", employee.getName());
+		Employee found = employeeService.getEmployee(employee.getId());
+		assertEquals("Smith", found.getName());
 	}
 
 	@Test
 	public void testGetAllEmployees() {
+		int size = employeeService.getAllEmployees().size();
+		employee.setId(1001);
+		employee.setAge(32);
+		employee.setName("Moharana");
+		employee.setSalary(55000);
 		employeeService.createEmployee(employee);
-		employeeService.getAllEmployees(employee.getName());
-		assertEquals("Smith", employee.getName());
+		assertTrue(size < employeeService.getAllEmployees().size());
 	}
 
 	@Test
 	public void testGetAllEmployeesString() {
-		employeeService.createEmployee(employee);
-		employeeService.getAllEmployees(employee.getName());
-		assertEquals("Smith", employee.getName());
-	}
 
+		List<Employee> search = employeeService.getAllEmployees(employee.getName());
+		for (Employee emp111 : search) {
+			System.out.println(emp111.getName());
+			assertEquals("Smith", emp111.getName());
+		}
+
+	}
 }

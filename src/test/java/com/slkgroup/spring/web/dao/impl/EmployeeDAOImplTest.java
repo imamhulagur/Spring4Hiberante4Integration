@@ -1,7 +1,10 @@
 package com.slkgroup.spring.web.dao.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,10 +16,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.slkgroup.spring.web.dao.EmployeeDAO;
 import com.slkgroup.spring.web.entity.Employee;
-import com.slkgroup.spring.web.service.EmployeeService;
 
 /**
- * @author Razi
+ * @author Razi Ahmad & Sasmita Moharana
  * @version 1.0
  */
 
@@ -24,9 +26,6 @@ import com.slkgroup.spring.web.service.EmployeeService;
 @ContextConfiguration({ "classpath:/mvc-dispatcher-servlet.xml" })
 @PropertySource({ "classpath:/application.properties" })
 public class EmployeeDAOImplTest {
-
-	@Autowired
-	private EmployeeService employeeService;
 
 	@Autowired
 	private EmployeeDAO employeeDAO;
@@ -40,31 +39,34 @@ public class EmployeeDAOImplTest {
 
 	@Before
 	public void setUpBeforeEachTest() {
-
-		employee.setId(11);
 		employee.setName("Smith");
-		employee.setAge(30);
+		employee.setAge(33);
 		employee.setSalary(12000);
+		employeeDAO.createEmployee(employee);
 	}
 
 	@Test
-	public void testCreateEmployee() {
-		employeeDAO.createEmployee(employee);
-		assertEquals("Smith", employee.getName());
+	public void testCreateEmployee_positive() {
+		Employee found = employeeDAO.getEmployee(employee.getId());
+		assertEquals("Smith", found.getName());
+	}
+
+	@Test
+	public void testCreateEmployee_negative() {
+		Employee found = employeeDAO.getEmployee(employee.getId());
+		assertNotEquals("Smit", found.getName());
 	}
 
 	@Test
 	public void testUpdateEmployee() {
-		employeeDAO.createEmployee(employee);
 		employee.setName("baby");
 		employeeDAO.updateEmployee(employee);
-		assertEquals("baby", employee.getName());
+		Employee found = employeeDAO.getEmployee(employee.getId());
+		assertEquals("baby", found.getName());
 	}
 
 	@Test
 	public void testDeleteEmployee() {
-
-		employeeDAO.createEmployee(employee);
 		int size = employeeDAO.getAllEmployees().size();
 		employeeDAO.deleteEmployee(employee.getId());
 		assertTrue(size > employeeDAO.getAllEmployees().size());
@@ -72,23 +74,30 @@ public class EmployeeDAOImplTest {
 
 	@Test
 	public void testGetEmployee() {
-		employeeDAO.createEmployee(employee);
-		employeeDAO.getEmployee(employee.getId());
-		assertEquals("Smith", employee.getName());
+		Employee available = employeeDAO.getEmployee(employee.getId());
+		assertEquals(employee.getName(), available.getName());
 	}
 
 	@Test
 	public void testGetAllEmployees() {
+		int size = employeeDAO.getAllEmployees().size();
+		employee.setId(1001);
+		employee.setAge(32);
+		employee.setName("Moharana");
+		employee.setSalary(55000);
 		employeeDAO.createEmployee(employee);
-		employeeDAO.getAllEmployees(employee.getName());
-		assertEquals("Smith", employee.getName());
+		assertTrue(size < employeeDAO.getAllEmployees().size());
 	}
 
 	@Test
 	public void testGetAllEmployeesString() {
-		employeeDAO.createEmployee(employee);
-		employeeDAO.getAllEmployees(employee.getName());
-		assertEquals("Smith", employee.getName());
-	}
 
+		List<Employee> search = employeeDAO.getAllEmployees(employee.getName());
+		for (Employee emp111 : search) {
+			System.out.println(emp111.getName());
+			assertEquals("Smith", emp111.getName());
+
+		}
+
+	}
 }
