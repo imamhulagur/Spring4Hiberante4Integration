@@ -1,0 +1,243 @@
+# https://code-maven.com/jenkins-pipeline-running-external-programs
+
+pipeline {
+    agent { label 'master' }
+    stages {
+        stage('build') {
+            steps {
+                script {
+                    bat 'wmic computersystem get name'
+                    bat 'echo %PATH%'
+                    echo env.PATH
+                }
+            }
+        }
+    }
+}
+
+
+
+echo bat(returnStdout: true, script: 'set')
+script {
+    def disk_size = sh(script: "df / --output=avail | tail -1", returnStdout: true).trim() as Integer
+    println("disk_size = ${disk_size}")
+}
+
+
+
+examples/jenkins/list_disk_size.Jenkinsfile
+------------------------------------------
+pipeline {
+    agent { label 'master' }
+    stages {
+        stage('build') {
+            steps {
+                script {
+                    def disk_size = sh(script: "df / --output=avail | tail -1", returnStdout: true).trim() as Integer
+                    println("disk_size = ${disk_size}")
+                }
+            }
+        }
+    }
+}
+
+
+script {
+    def disk_size = sh(script: "ssh remote-server df / --output=avail | tail -1", returnStdout: true).trim() as Integer
+    println("disk_size = ${disk_size}")
+}
+
+
+
+
+emailext (
+    subject: "Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",
+    body: """<p>Check console output at <a href="${env.BUILD_URL}">${env.JOB_NAME}</a></p>""",
+    to: "report@code-maven.com",
+    from: "jenkins@code-maven.com"
+)
+ 
+ 
+def notify(status) {
+   wrap([$class: 'BuildUser']) {
+       emailext (
+       subject: "${status}: Job ${env.JOB_NAME} ([${env.BUILD_NUMBER})",
+       body: """
+       Check console output at <a href="${env.BUILD_URL}">${env.JOB_NAME} (${env.BUILD_NUMBER})</a>""",
+       to: "${BUILD_USER_EMAIL}",
+       from: 'jenkins@company.com')
+   }
+}
+
+
+script {
+   manager.addShortText("Some text")
+   manager.addShortText("\ntext")
+   manager.addShortText("same line", "black", "lightgreen", "0px", "white")
+}
+
+
+examples/jenkins/create-jenkins-node.sh
+---------------------------------------
+
+#!/bin/bash
+ 
+JENKINS_URL=$1
+NODE_NAME=$2
+NODE_HOME='/home/build/jenkins-node'
+EXECUTORS=1
+SSH_PORT=22
+CRED_ID=$3
+LABELS=build
+USERID=${USER}
+ 
+cat <<EOF | java -jar ~/bin/jenkins-cli.jar -s $1 create-node $2
+<slave>
+  <name>${NODE_NAME}</name>
+  <description></description>
+  <remoteFS>${NODE_HOME}</remoteFS>
+  <numExecutors>${EXECUTORS}</numExecutors>
+  <mode>NORMAL</mode>
+  <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
+  <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.5">
+    <host>${NODE_NAME}</host>
+    <port>${SSH_PORT}</port>
+    <credentialsId>${CRED_ID}</credentialsId>
+  </launcher>
+  <label>${LABELS}</label>
+  <nodeProperties/>
+  <userId>${USERID}</userId>
+</slave>
+EOF
+
+
+
+
+examples/jenkins/builduser.Jenkinsfile
+-------------------------------------
+
+pipeline {
+   agent none
+   stages {
+       stage('example') {
+           agent { label 'master' }
+           steps {
+               script {
+                   wrap([$class: 'BuildUser']) {
+                       echo "BUILD_USER=${BUILD_USER}"
+                       echo "BUILD_USER_FIRST_NAME=${BUILD_USER_FIRST_NAME}"
+                       echo "BUILD_USER_LAST_NAME=${BUILD_USER_LAST_NAME}"
+                       echo "BUILD_USER_ID=${BUILD_USER_ID}"
+                       echo "BUILD_USER_EMAIL=${BUILD_USER_EMAIL}"
+                       echo "---"
+                       echo "env.BUILD_USER=${env.BUILD_USER}"
+                       echo "env.BUILD_USER_FIRST_NAME=${env.BUILD_USER_FIRST_NAME}"
+                       echo "env.BUILD_USER_LAST_NAME=${env.BUILD_USER_LAST_NAME}"
+                       echo "env.BUILD_USER_ID=${env.BUILD_USER_ID}"
+                       echo "env.BUILD_USER_EMAIL=${env.BUILD_USER_EMAIL}"
+                   }
+               }
+           }
+       }
+   }
+}
+
+
+
+examples/jenkins/list_environment.Jenkinsfile
+---------------------------------------------
+pipeline {
+   agent none
+   environment {
+       color = "blue"
+   }
+   stages {
+       stage('first') {
+            agent { label 'master' }
+            steps {
+               sh "printenv | sort"
+            }
+        }
+    }
+}
+
+
+examples/jenkins/list_environment_internally.Jenkinsfile
+-------------------------------------------------------
+pipeline {
+   agent none
+   environment {
+       color = 'blue'
+   }
+   stages {
+       stage('example') {
+            agent { label 'master' }
+            steps {
+               script {
+                   def fields = env.getEnvironment()
+                   fields.each {
+                        key, value -> println("${key} = ${value}");
+                    }
+ 
+                    println(env.PATH)
+               }
+            }
+        }
+    }
+}
+
+examples/jenkins/set_environment_by_script.Jenkinsfile
+------------------------------------------------------
+pipeline {
+   agent none
+   environment {
+       first_path = get_first()
+   }
+   stages {
+       stage('example') {
+            agent { label 'master' }
+            steps {
+                print(env.first_path)
+            }
+        }
+    }
+}
+ 
+def get_first() {
+    node('master') {
+        return env.PATH.split(':')[0]
+    }
+}
+
+
+examples/jenkins/clone_using_reference.jenkinsfile
+--------------------------------------------------
+def checkout_from_reference(commit) {
+    def reponame = 'code-maven'
+    def repo_url = "git@bitbucket.org:USER/${reponame}.git"
+ 
+    echo "Checkout SHA from reference $commit"
+    checkout([
+        $class: 'GitSCM',
+        branches: [[name: commit]],
+        doGenerateSubmoduleConfigurations: false,
+        extensions: [
+            [$class: 'RelativeTargetDirectory', relativeTargetDir: reponame],
+            [$class: 'CloneOption', reference: "/opt/${reponame}"]
+        ],
+        submoduleCfg: [],
+        userRemoteConfigs: [
+            [credentialsId: 'jenkins-git-credentials', url: repo_url]
+        ]
+    ])
+    // just to show we are in the right commit:
+    dir(reponame) {
+        sh(script: "git rev-parse HEAD")
+    }
+}
+ 
+
+
+
+
+
