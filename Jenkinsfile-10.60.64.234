@@ -82,23 +82,22 @@ pipeline {
                 echo 'Test Begins'
                 try {
                     // Any maven phase that that triggers the test phase can be used here.
-
-	                if (isUnix()) {
-                        echo "Test Process in Unix"
- 					    sh "${mvnHome}/bin/mvn test -B"
+                    mvnHome =  tool name: 'apache-maven-3.6.0', type: 'maven'
+                        if (isUnix()) {
+                            echo "Test Process in Unix"
+                            sh "${mvnHome}/bin/mvn test -B"
                         } 
-                    else {
-                        echo 'Test Process in Windows'
-                        bat label: 'Junit Testing process', script: "\"${mvnHome}\"\\bin\\mvn test -B"
-				      
+                        else {
+                            echo 'Test Process in Windows'
+                            bat label: 'Junit Testing process', script: "\"${mvnHome}\"\\bin\\mvn test -B"
                         }
-                    } catch(err) {
+                    } catch(Exception err) {
                         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-                          	
-                          	if (currentBuild.result == 'UNSTABLE')
-                            	currentBuild.result = 'FAILURE'
-                          		throw err
-                        }
+                          	if (currentBuild.result == 'FAILURE')
+                                echo "ERROR:  ${err}"
+                                echo "RESULT: ${currentBuild.result}"
+                          	throw err
+                    }
                 echo "Test Ends"
                 }
             }
@@ -127,11 +126,8 @@ pipeline {
         aborted {
             echo 'JENKINS PIPELINE ABORTED'
         }
+        
         failure {
-            echo 'JENKINS PIPELINE FAILED'
-            archive "target/**/*"
-            junit 'target/surefire-reports/**/*.xml'
-            failure {
             echo 'JENKINS PIPELINE FAILED'
             archive "target/**/*"
             junit 'target/surefire-reports/**/*.xml'
@@ -139,6 +135,6 @@ pipeline {
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
-        }
+        
     }
 }
