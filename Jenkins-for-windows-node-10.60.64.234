@@ -52,7 +52,7 @@ node {
     }
     
     stage ('Test') {
-             echo 'Test Begins'
+            echo 'Test Begins'
                 try {
                     // Any maven phase that that triggers the test phase can be used here.
                     def mvnHome =  tool name: 'apache-maven-3.6.0', type: 'maven'
@@ -71,8 +71,8 @@ node {
                                 echo "RESULT: ${currentBuild.result}"
                           	throw err
                     }
-                echo "Test Ends"
-    }
+            echo "Test Ends"
+        }
     
     stage ('Deploy/Deliver') {
         echo 'Deploy/Deliver Begins'
